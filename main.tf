@@ -1,22 +1,21 @@
 terraform {
   required_providers {
     google = {
-      source  = "hashicorp/google"
-      version = "5.6.0"
+      source = "hashicorp/google"
+      version = "5.13.0"
     }
   }
 }
 
 provider "google" {
-  credentials = file(var.credentials)
-  project     = var.project
-  region      = var.region
+  credentials = data.hashicorp.secret.github_secret.GUGL_CRED.value
+  project     = data.hashicorp.secret.github_secret.GUGL_NAME_PROYECT.value
+  region      = "us-central1"
 }
 
-
 resource "google_storage_bucket" "demo-bucket" {
-  name          = var.gcs_bucket_name
-  location      = var.location
+  name          = data.hashicorp.secret.github_secret.GOOGLE_STORAGE_BUCKET_NAME.value
+  location      = "US"
   force_destroy = true
 
 
@@ -30,9 +29,6 @@ resource "google_storage_bucket" "demo-bucket" {
   }
 }
 
-
-
-resource "google_bigquery_dataset" "demo_dataset" {
-  dataset_id = var.bq_dataset_name
-  location   = var.location
+resource "google_bigquery_dataset" "dataset_demo" {
+  dataset_id = data.hashicorp.secret.github_secret.BIGQ_DATASET_NAME.value
 }
