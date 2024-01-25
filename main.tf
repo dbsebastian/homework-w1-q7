@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = var.GUGL_CRED
+  credentials = var.GOOGLE_CREDENTIALS
   project     = var.GUGL_NAME_PROYECT
   region      = "us-central1"
 }
